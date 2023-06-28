@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene vr-mode-ui="enabled: true">
+      <a-assets>
+        <!-- 이곳의 이미지 src주소만 변경 -->
+        <!-- <img
+          id="scene0"
+          src="team6_01.jpg"
+        />
+        <img
+          id="scene1"
+          src="team6_02.jpg"
+        />
+        <img
+          id="scene2"
+          src="team6_03.jpg"
+        /> -->
+      </a-assets>
+      <a-sky id="sky" src=""></a-sky>
+
+      <a-entity id="left" oculus-touch-controls="hand: left"></a-entity>
+      <a-entity id="right" oculus-touch-controls="hand: right"></a-entity>
+    </a-scene>
+  </body>
+
+  <script>
+    let left = document.querySelector("#left");
+    let right = document.querySelector("#right");
+    let af = document.querySelector("a-scene");
+    let sky = document.querySelector("#sky");
+    let scene = 0;
+
+    let files = [
+      'team1_b_01.png', 'team1_b_02.png', 'team1_b_03.png',
+      'team2_b_01.png', 'team2_b_02.png', 'team2_b_03.png',
+      'team3_b_01.jpg', 'team3_b_02.jpg', 'team3_b_03.jpg',
+      'team4_b_01.png', 'team4_b_02.png', 'team4_b_03.png',
+      'team5_b_01.jpg', 'team5_b_02.png', 'team5_b_03.jpg',
+      'team6_b_01.jpg', 'team6_b_02.jpg', 'team6_b_03.jpg',
+      'team7_b_01.png', 'team7_b_02.png', 'team7_b_03.png',
+      'team8_b_01.png', 'team8_b_02.png', 'team8_b_03.png'
+    ]
+    sky.setAttribute("src", files[scene]);
+
+    left.addEventListener("triggerup", function () {
+      scene--;
+      if (scene < 0) scene += files.length;
+      sky.setAttribute("src", files[scene%files.length]);
+    });
+
+    right.addEventListener("triggerup", function () {
+      scene++;
+      sky.setAttribute("src", files[scene%files.length]);
+    });
+
+    window.addEventListener("keypress", function (e) {
+      if(e.key=='z') scene--
+      if(e.key=='x') scene++
+
+      if (scene < 0) scene += files.length;
+
+      sky.setAttribute("src", files[scene%files.length]);
+      
+    });
+  </script>
+</html>
